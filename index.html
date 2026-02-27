@@ -1,10 +1,15 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관상으로 보는 수능 성적표</title>
+    <title>관상으로 보는 수능 성적표 | 전통 관상학 AI 예측</title>
+    <meta name="description" content="사진 한 장으로 전통 동양 관상학 기반 AI가 수능 성적표를 예측합니다. 이마·눈매·코·입술·턱의 관상을 분석하여 국어·수학·영어·탐구 등급을 알려드립니다.">
+    <meta name="keywords" content="관상, 수능, 성적표, 관상학, 수능 예측, AI 관상, 재미, 얼굴 분석">
+    <meta property="og:title" content="관상으로 보는 수능 성적표">
+    <meta property="og:description" content="사진 한 장으로 오천 년 동양 관상학이 수능 성적을 예측합니다.">
+    <meta property="og:type" content="website">
     <meta name="google-adsense-account" content="ca-pub-5433446149148136">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5433446149148136" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
@@ -16,8 +21,10 @@ body {
     margin: 0;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    padding-top: 4vh;
     background: radial-gradient(ellipse at center, #1a0505 0%, #0d0000 60%, #000 100%);
     overflow-x: hidden;
     position: relative;
@@ -414,6 +421,84 @@ header p {
     66%  { transform: scaleX(1.05) scaleY(0.95) rotate(-1deg); opacity: 0.9;  }
     100% { transform: scaleX(0.95) scaleY(1.02) rotate(2deg);  opacity: 1;    }
 }
+
+/* ── 광고 슬롯 ── */
+.ad-slot {
+    margin: 1.2rem 0;
+    min-height: 60px;
+    text-align: center;
+}
+
+/* ── 콘텐츠 섹션 ── */
+.content-section {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 720px;
+    margin: 2rem auto 0;
+    padding: 0 1rem 3rem;
+}
+
+.content-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.content-card {
+    background: rgba(20, 5, 0, 0.88);
+    border: 1px solid rgba(180, 80, 0, 0.3);
+    border-radius: 3px;
+    padding: 1.4rem 1.6rem;
+    color: rgba(220, 180, 120, 0.9);
+    line-height: 1.85;
+}
+
+.content-card h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #e8a040;
+    letter-spacing: 2px;
+    margin: 0 0 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(180, 80, 0, 0.3);
+}
+
+.content-card p {
+    font-size: 0.85rem;
+    margin: 0 0 0.6rem;
+}
+.content-card p:last-child { margin-bottom: 0; }
+
+.feature-list, .how-to-list {
+    font-size: 0.85rem;
+    margin: 0;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.feature-list li strong { color: #e8a040; }
+.feature-list li em { color: rgba(200, 160, 80, 0.9); font-style: normal; font-weight: 700; }
+.how-to-list li strong { color: #e8a040; }
+
+.disclaimer {
+    font-size: 0.75rem !important;
+    color: rgba(180, 140, 80, 0.6) !important;
+    margin-top: 0.8rem !important;
+}
+
+/* ── 푸터 ── */
+.site-footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 1.2rem 1rem 2rem;
+    font-size: 0.72rem;
+    color: rgba(180, 100, 0, 0.4);
+    letter-spacing: 1px;
+}
     </style>
 </head>
 <body>
@@ -534,8 +619,78 @@ header p {
 
             <button id="predict-button">관상 보기</button>
             <div id="result-container" class="result-container"></div>
+
+            <!-- 결과 하단 광고 -->
+            <div class="ad-slot" id="ad-after-result">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-5433446149148136"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
         </main>
     </div>
+
+    <!-- 콘텐츠 섹션 -->
+    <section class="content-section" aria-label="관상학 소개">
+        <div class="content-inner">
+
+            <article class="content-card">
+                <h2>관상학이란?</h2>
+                <p>관상학(觀相學)은 사람의 얼굴 생김새를 보고 그 사람의 성격, 운명, 기질을 판단하는 동양의 전통 학문입니다. 중국에서 수천 년 전 발생하여 한국·일본 등 동아시아 전역에 전파됐으며, 이마·눈·코·입·턱의 다섯 부위를 <strong>오악(五嶽)</strong>이라 부르고 각각 하늘·땅·사람의 기운과 연결지어 해석합니다.</p>
+                <p>현대에는 심리학·신경과학 연구와 접목되어, 얼굴의 대칭성과 비율이 인지 능력 및 성격 특성과 상관관계가 있다는 연구 결과도 발표되고 있습니다.</p>
+            </article>
+
+            <!-- 콘텐츠 사이 광고 -->
+            <div class="ad-slot">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-5433446149148136"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+            <article class="content-card">
+                <h2>5가지 관상 부위와 수능의 관계</h2>
+                <ul class="feature-list">
+                    <li><strong>이마 (상정·上停)</strong> — 사고력과 기억력의 중심. 이마가 넓고 밝을수록 언어 처리 능력이 뛰어나 <em>국어</em> 성적과 연관됩니다.</li>
+                    <li><strong>눈매 (안신·眼神)</strong> — 집중력과 분석력의 척도. 눈빛이 또렷한 사람은 논리적 사고가 강해 <em>수학</em>에 유리합니다.</li>
+                    <li><strong>코 (준두·準頭)</strong> — 실행력과 의지력의 상징. 코의 기세가 강할수록 꾸준한 반복 학습이 가능해 <em>영어</em> 듣기·독해에 강합니다.</li>
+                    <li><strong>입술 (구각·口角)</strong> — 표현력과 암기력의 원천. 입술이 분명한 사람은 언어 감각이 예민하여 <em>탐구</em> 과목 서술형에 강합니다.</li>
+                    <li><strong>턱 (지각·地閣)</strong> — 지구력과 지속력의 기반. 턱이 단단한 사람은 장기 학습 내공이 쌓여 <em>한국사</em> 암기에 유리합니다.</li>
+                </ul>
+            </article>
+
+            <article class="content-card">
+                <h2>이용 방법</h2>
+                <ol class="how-to-list">
+                    <li>수험표 양식에 <strong>이름</strong>을 입력합니다.</li>
+                    <li>수험표 사진 칸을 클릭해 <strong>본인 사진</strong>을 업로드합니다.</li>
+                    <li>국어·수학·탐구 <strong>선택과목</strong>을 고릅니다.</li>
+                    <li><strong>관상 보기</strong> 버튼을 누르면 AI가 관상을 분석합니다.</li>
+                    <li>잠시 후 나만의 <strong>수능 성적표</strong>가 발급됩니다.</li>
+                </ol>
+                <p class="disclaimer">※ 본 서비스는 전통 관상학을 재미로 적용한 엔터테인먼트 콘텐츠이며, 실제 수능 성적과는 무관합니다.</p>
+            </article>
+
+            <!-- 하단 광고 -->
+            <div class="ad-slot">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-5433446149148136"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <p>© 2025 관상으로 보는 수능 성적표 · 본 결과는 오락 목적이며 실제 성적과 무관합니다.</p>
+    </footer>
     <script>
 // 불꽃 파티클
 (function() {
