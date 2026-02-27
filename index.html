@@ -273,13 +273,47 @@ header p {
 .sh-input::placeholder { color: #bbb; font-size: 0.82rem; }
 .sh-input[readonly] { color: #555; cursor: default; }
 
+/* 선택과목 섹션 */
+.suheomyo-subjects {
+    padding: 8px 14px 10px;
+    border-top: 1px dashed #c8d4e8;
+    background: #f5f7fc;
+}
+.subjects-title {
+    font-size: 0.65rem;
+    color: #1a3a6b;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 7px;
+}
+.subject-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px 14px;
+}
+.sh-select-field { display: flex; flex-direction: column; gap: 3px; }
+.sh-select {
+    border: 1px solid #c0c8d8;
+    border-radius: 2px;
+    padding: 4px 6px;
+    font-size: 0.78rem;
+    font-family: 'Malgun Gothic', sans-serif;
+    color: #111;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+.sh-select:focus { border-color: #1a3a6b; }
+
 .suheomyo-footer {
     padding: 6px 14px 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid #e4e8f0;
-    background: #f5f7fc;
+    background: #eef1f9;
 }
 .sh-footer-note { font-size: 0.6rem; color: #999; }
 .sh-stamp {
@@ -442,6 +476,54 @@ header p {
                         </div>
                     </div>
                 </div>
+                <!-- 선택과목 -->
+                <div class="suheomyo-subjects">
+                    <div class="subjects-title">선 택 과 목</div>
+                    <div class="subject-rows">
+                        <div class="sh-select-field">
+                            <span class="sh-label">국 어</span>
+                            <select id="sel-kor" class="sh-select">
+                                <option value="화법과 작문">화법과 작문</option>
+                                <option value="언어와 매체">언어와 매체</option>
+                            </select>
+                        </div>
+                        <div class="sh-select-field">
+                            <span class="sh-label">수 학</span>
+                            <select id="sel-math" class="sh-select">
+                                <option value="확률과 통계">확률과 통계</option>
+                                <option value="미적분">미적분</option>
+                                <option value="기하">기하</option>
+                            </select>
+                        </div>
+                        <div class="sh-select-field">
+                            <span class="sh-label">탐구 1</span>
+                            <select id="sel-exp1" class="sh-select">
+                                <optgroup label="사회탐구">
+                                    <option>생활과 윤리</option>
+                                    <option>윤리와 사상</option>
+                                    <option>한국지리</option>
+                                    <option>세계지리</option>
+                                    <option>동아시아사</option>
+                                    <option>세계사</option>
+                                    <option>경제</option>
+                                    <option>정치와 법</option>
+                                    <option>사회·문화</option>
+                                </optgroup>
+                                <optgroup label="과학탐구">
+                                    <option>물리학Ⅰ</option>
+                                    <option>화학Ⅰ</option>
+                                    <option>생명과학Ⅰ</option>
+                                    <option>지구과학Ⅰ</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="sh-select-field">
+                            <span class="sh-label">탐구 2</span>
+                            <select id="sel-exp2" class="sh-select"></select>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="suheomyo-footer">
                     <span class="sh-footer-note">※ 사진을 클릭하여 본인 사진을 첨부하세요</span>
                     <span class="sh-stamp">관상원</span>
@@ -824,7 +906,7 @@ function brightnessToAbsGrade(brightness, rng) {
 const EXPLORE_SOCIAL = ['생활과 윤리', '윤리와 사상', '한국지리', '세계지리', '동아시아사', '세계사', '경제', '정치와 법', '사회·문화'];
 const EXPLORE_SCIENCE = ['물리학Ⅰ', '화학Ⅰ', '생명과학Ⅰ', '지구과학Ⅰ'];
 
-function generateScores(f) {
+function generateScores(f, subjects) {
     // 이미지 밝기값으로 시드 고정 → 같은 사진은 항상 같은 결과
     const seed = Math.round((f.이마 * 1e4 + f.눈 * 1e3 + f.코 * 1e2 + f.입 * 1e1 + f.턱) * 1e4);
     const rng = mulberry32(seed);
@@ -836,12 +918,12 @@ function generateScores(f) {
 
     return [
         {
-            subject: '국어', elective: '화법과 작문',
+            subject: '국어', elective: subjects.kor,
             standardScore: weighted(f.이마, 100, 150, rng), percentile: korPct,
             grade: percentileToGrade(korPct), feature: '이마', brightness: f.이마,
         },
         {
-            subject: '수학', elective: '확률과 통계',
+            subject: '수학', elective: subjects.math,
             standardScore: weighted(f.눈, 100, 149, rng), percentile: mathPct,
             grade: percentileToGrade(mathPct), feature: '눈매', brightness: f.눈,
         },
@@ -856,14 +938,12 @@ function generateScores(f) {
             grade: brightnessToAbsGrade(f.턱, rng), feature: '턱', brightness: f.턱,
         },
         {
-            subject: '탐구',
-            elective: EXPLORE_SOCIAL[Math.floor(rng() * EXPLORE_SOCIAL.length)],
+            subject: '탐구', elective: subjects.exp1,
             standardScore: weighted(f.입, 50, 75, rng), percentile: exp1Pct,
             grade: percentileToGrade(exp1Pct), feature: '입술', brightness: f.입,
         },
         {
-            subject: '탐구',
-            elective: EXPLORE_SCIENCE[Math.floor(rng() * EXPLORE_SCIENCE.length)],
+            subject: '탐구', elective: subjects.exp2,
             standardScore: weighted(f.입, 50, 75, rng), percentile: exp2Pct,
             grade: percentileToGrade(exp2Pct), feature: '입술', brightness: f.입,
         },
@@ -880,14 +960,14 @@ const STEPS = [
     { icon: '📜', text: '수능 출제위원회에 몰래 제출... 아니, 최종 성적을 산출 중' },
 ];
 
-async function runAnalysis(file, name, examNumber, resultContainer) {
+async function runAnalysis(file, name, examNumber, subjects, resultContainer) {
     for (const step of STEPS) {
         resultContainer.innerHTML = `<p class="analyzing">${step.icon} ${step.text}</p>`;
         await new Promise(r => setTimeout(r, 550));
     }
 
     const features = await analyzeImage(file);
-    const scores = generateScores(features);
+    const scores = generateScores(features, subjects);
 
     resultContainer.innerHTML = '';
     const scoreReport = document.createElement('score-report');
@@ -897,13 +977,31 @@ async function runAnalysis(file, name, examNumber, resultContainer) {
     resultContainer.appendChild(scoreReport);
 }
 
-// 수험번호 자동 생성 (페이지 로드 시)
+// 수험번호 자동 생성
 function generateExamNumber() {
     const area   = String(Math.floor(Math.random() * 90) + 10);
     const serial = String(Math.floor(Math.random() * 900000) + 100000);
     return area + serial;
 }
 document.getElementById('exam-number').value = generateExamNumber();
+
+// 탐구2: 탐구1에서 선택한 과목 제외하고 목록 채우기
+const ALL_EXPLORE = [
+    '생활과 윤리', '윤리와 사상', '한국지리', '세계지리', '동아시아사',
+    '세계사', '경제', '정치와 법', '사회·문화',
+    '물리학Ⅰ', '화학Ⅰ', '생명과학Ⅰ', '지구과학Ⅰ',
+];
+function updateExp2() {
+    const exp1Val = document.getElementById('sel-exp1').value;
+    const sel2    = document.getElementById('sel-exp2');
+    const prev    = sel2.value;
+    sel2.innerHTML = ALL_EXPLORE
+        .filter(s => s !== exp1Val)
+        .map(s => `<option value="${s}"${s === prev ? ' selected' : ''}>${s}</option>`)
+        .join('');
+}
+document.getElementById('sel-exp1').addEventListener('change', updateExp2);
+updateExp2();
 
 // 사진 업로드 → 수험표 미리보기
 document.getElementById('face-image').addEventListener('change', (e) => {
@@ -917,9 +1015,15 @@ document.getElementById('face-image').addEventListener('change', (e) => {
 });
 
 document.getElementById('predict-button').addEventListener('click', () => {
-    const fileInput   = document.getElementById('face-image');
-    const name        = document.getElementById('student-name').value.trim();
-    const examNumber  = document.getElementById('exam-number').value;
+    const fileInput  = document.getElementById('face-image');
+    const name       = document.getElementById('student-name').value.trim();
+    const examNumber = document.getElementById('exam-number').value;
+    const subjects   = {
+        kor:  document.getElementById('sel-kor').value,
+        math: document.getElementById('sel-math').value,
+        exp1: document.getElementById('sel-exp1').value,
+        exp2: document.getElementById('sel-exp2').value,
+    };
     const resultContainer = document.getElementById('result-container');
 
     if (fileInput.files.length === 0) {
@@ -932,7 +1036,7 @@ document.getElementById('predict-button').addEventListener('click', () => {
         return;
     }
 
-    runAnalysis(fileInput.files[0], name, examNumber, resultContainer);
+    runAnalysis(fileInput.files[0], name, examNumber, subjects, resultContainer);
 });
     </script>
 </body>
