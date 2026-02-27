@@ -1,14 +1,504 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관상으로 보는 수능 성적표</title>
+    <style>
+body {
+    font-family: sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: linear-gradient(to top right, #6a11cb, #2575fc);
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.upload-section input[type="file"] {
+    display: none;
+}
+
+.upload-section label {
+    background-color: #007bff;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.upload-section label:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+}
+
+#predict-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+#predict-button:hover {
+    background-color: #218838;
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
+}
+
+.result-container {
+    margin-top: 2rem;
+}
+
+.analyzing {
+    font-size: 1rem;
+    color: #444;
+    padding: 1rem;
+    background: rgba(255,255,255,0.7);
+    border-radius: 8px;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+    </style>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div class="container">
+        <header>
+            <h1>관상으로 보는 수능 성적표</h1>
+            <p>사진을 올리면 전통 관상학으로 수능 성적표를 예측해드립니다.</p>
+        </header>
+        <main>
+            <div class="upload-section">
+                <input type="file" id="face-image" accept="image/*">
+                <label for="face-image">사진 선택</label>
+                <button id="predict-button">결과 보기</button>
+            </div>
+            <div id="result-container" class="result-container"></div>
+        </main>
+    </div>
+    <script type="module">
+// ── score-report.js ──────────────────────────────────────────────────────────
+
+const PHYSIOGNOMY = {
+    이마: {
+        높음: { 해석: '상정(上停)이 넓고 빛나 사고의 기운이 충만함',     성향: '생각형 · 계획 우선',   밈: '국어 지문을 끝까지 읽고도 시간이 남는 타입' },
+        중간: { 해석: '상정이 균형 잡혀 사고와 행동이 고름',               성향: '균형형 · 상황 대응',   밈: '2독에서 갑자기 이해가 오는 타입' },
+        낮음: { 해석: '상정의 기운이 응축되어 행동 본능이 앞섬',           성향: '행동형 · 즉흥 대응',   밈: '지문 읽기 전 선지부터 훑는 전략가 타입' },
+    },
+    눈매: {
+        높음: { 해석: '안신(眼神)이 또렷하고 집중의 기운이 깊음',          성향: '분석형 · 깊이 처리',   밈: '한 문제 30분 붙잡고 결국 맞히는 타입' },
+        중간: { 해석: '눈빛이 안정되어 빠름과 깊음이 균형잡힘',            성향: '균형형 · 안정 집중',   밈: '3점짜리는 넘기고 2점짜리 다 맞히는 현실주의 타입' },
+        낮음: { 해석: '눈매가 빠르고 감각 반응이 날카로움',                성향: '감각형 · 빠른 반응',   밈: '직관 찍기 정답률이 의외로 높은 타입' },
+    },
+    코: {
+        높음: { 해석: '준두(準頭)가 높고 실행의 기운이 충만함',            성향: '목표형 · 높은 추진력', 밈: '틀린 문제 이유를 오답노트 3권에 기록하는 타입' },
+        중간: { 해석: '비량(鼻梁)이 바르고 실행과 안정이 균형잡힘',        성향: '균형형 · 안정 실행',   밈: '공부도 하고 유튜브도 보는 절묘한 균형 타입' },
+        낮음: { 해석: '코의 기세가 부드러워 안정 추구 성향이 강함',        성향: '안정형 · 꾸준 누적',   밈: '수업 필기만 완벽해도 등급이 나오는 타입' },
+    },
+    입술: {
+        높음: { 해석: '구각(口角)이 뚜렷하고 표현의 기운이 강함',          성향: '표현형 · 언어 감각',   밈: "답 적으면서 혼자 '맞지?' 하며 고개 끄덕이는 타입" },
+        중간: { 해석: '입술이 균형잡혀 논리와 감각이 조화로움',            성향: '균형형 · 논리적 표현', 밈: '선지 읽다 본능적으로 정답이 눈에 들어오는 타입' },
+        낮음: { 해석: '순박(脣薄)하고 내향 분석 기질이 선명함',            성향: '분석형 · 내향적 사고', 밈: '조용히 공부하다 시험에서 반전 보여주는 타입' },
+    },
+    턱: {
+        높음: { 해석: '지각(地閣)이 넓고 지속의 기운이 두텁고 굳음',       성향: '지속형 · 장기 내공',   밈: '수능 3년 준비해도 지치지 않는 역전의 용사 타입' },
+        중간: { 해석: '하정(下停)이 안정적이어서 지속력이 고름',           성향: '균형형 · 안정 지속',   밈: '3주 플랜 세우면 2.5주는 꼭 지키는 현실 타입' },
+        낮음: { 해석: '턱이 예리하여 순간 집중 기질이 강함',               성향: '순간형 · 단기 몰입',   밈: '수능 전날 밤샘으로 2등급 뛰어오를 잠재력 보유' },
+    },
+};
+
+function getVariant(feature, brightness) {
+    const variants = PHYSIOGNOMY[feature];
+    if (!variants) return { 해석: '-', 성향: '-', 밈: '-' };
+    if (brightness > 0.6)  return variants.높음;
+    if (brightness > 0.35) return variants.중간;
+    return variants.낮음;
+}
+
+class ScoreReport extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        const studentName = this.getAttribute('student-name');
+        const examNumber  = this.getAttribute('exam-number');
+        const scores      = JSON.parse(this.getAttribute('scores'));
+
+        const scoreRows = scores.map(s => {
+            const std  = s.standardScore != null ? s.standardScore : '-';
+            const pct  = s.percentile    != null ? s.percentile    : '-';
+            return `
+                <tr>
+                    <td class="subject">${s.subject}</td>
+                    <td class="elective">${s.elective}</td>
+                    <td>${std}</td>
+                    <td>${pct}</td>
+                    <td class="grade g${s.grade}">${s.grade}</td>
+                </tr>`;
+        }).join('');
+
+        const seen = new Set();
+        const physiognomyRows = scores.filter(s => {
+            if (seen.has(s.feature)) return false;
+            seen.add(s.feature);
+            return true;
+        }).map(s => {
+            const v = getVariant(s.feature, s.brightness ?? 0.5);
+            return `
+            <tr>
+                <td class="feature-name">${s.feature}</td>
+                <td class="feature-subject">${s.subject}${s.elective !== '-' ? ` (${s.elective})` : ''}</td>
+                <td>
+                    <div class="desc-wrap">
+                        <div class="desc-해석">${v.해석}</div>
+                        <div class="desc-row">
+                            <span class="desc-성향">${v.성향}</span>
+                            <span class="desc-밈">${v.밈}</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>`;
+        }).join('');
+
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host { display: block; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; }
+
+                .report {
+                    border: 2px solid #1a3a6b;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    background: #fff;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+                }
+
+                /* ── 헤더 ── */
+                .report-header {
+                    background: linear-gradient(135deg, #1a3a6b, #2e5fac);
+                    color: #fff;
+                    padding: 16px;
+                    text-align: center;
+                }
+                .report-header .title {
+                    font-size: 1rem;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    margin-bottom: 4px;
+                }
+                .report-header .subtitle {
+                    font-size: 0.75rem;
+                    opacity: 0.8;
+                }
+
+                /* ── 수험생 정보 ── */
+                .student-info {
+                    display: flex;
+                    border-bottom: 1px solid #c8d4e8;
+                    background: #f0f4fb;
+                }
+                .student-info .cell {
+                    flex: 1;
+                    padding: 8px 14px;
+                    font-size: 0.85rem;
+                }
+                .student-info .cell span {
+                    color: #1a3a6b;
+                    font-weight: bold;
+                    margin-right: 6px;
+                }
+                .student-info .cell + .cell {
+                    border-left: 1px solid #c8d4e8;
+                }
+
+                /* ── 성적 테이블 ── */
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 0.88rem;
+                }
+                thead tr {
+                    background: #e8edf8;
+                    color: #1a3a6b;
+                }
+                th, td {
+                    padding: 9px 10px;
+                    border: 1px solid #c8d4e8;
+                    text-align: center;
+                }
+                th { font-weight: bold; font-size: 0.82rem; }
+                td.subject  { font-weight: 600; color: #1a3a6b; }
+                td.elective { text-align: left; color: #555; font-size: 0.82rem; }
+
+                .grade { font-weight: bold; font-size: 1rem; }
+                .g1 { color: #c0392b; }
+                .g2 { color: #e67e22; }
+                .g3 { color: #d4ac0d; }
+                .g4 { color: #27ae60; }
+                .g5 { color: #2980b9; }
+                .g6 { color: #8e44ad; }
+                .g7, .g8, .g9 { color: #95a5a6; }
+
+                /* ── 관상 분석 ── */
+                .physio-section {
+                    border-top: 2px solid #c8d4e8;
+                    background: #fdf8f0;
+                }
+                .physio-title {
+                    background: linear-gradient(135deg, #6b3a1a, #ac5f2e);
+                    color: #fff;
+                    padding: 10px 14px;
+                    font-size: 0.88rem;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                }
+                .physio-table th { background: #f5ede0; color: #6b3a1a; }
+                .feature-name    { font-weight: bold; color: #6b3a1a; white-space: nowrap; }
+                .feature-subject { color: #555; white-space: nowrap; font-size: 0.8rem; }
+
+                .desc-wrap  { display: flex; flex-direction: column; gap: 4px; text-align: left; }
+                .desc-해석  { color: #333; font-size: 0.8rem; }
+                .desc-row   { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+                .desc-성향  { font-size: 0.72rem; background: #e8edf8; color: #1a3a6b;
+                               padding: 1px 7px; border-radius: 10px; font-weight: bold; white-space: nowrap; }
+                .desc-밈    { font-size: 0.75rem; color: #888; font-style: italic; }
+
+                .footer {
+                    font-size: 0.72rem;
+                    color: #999;
+                    padding: 8px 14px;
+                    text-align: right;
+                    border-top: 1px solid #e0e0e0;
+                    background: #fafafa;
+                }
+            </style>
+
+            <div class="report">
+                <div class="report-header">
+                    <div class="title">2025학년도 대학수학능력시험 성적통지표</div>
+                    <div class="subtitle">AI 전통 관상학 기반 예측</div>
+                </div>
+
+                <div class="student-info">
+                    <div class="cell"><span>수험번호</span>${examNumber}</div>
+                    <div class="cell"><span>성명</span>${studentName}</div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>영역</th>
+                            <th>선택과목</th>
+                            <th>표준점수</th>
+                            <th>백분위</th>
+                            <th>등급</th>
+                        </tr>
+                    </thead>
+                    <tbody>${scoreRows}</tbody>
+                </table>
+
+                <div class="physio-section">
+                    <div class="physio-title">🔮 관상 소견 — 학습 성향 분석</div>
+                    <table class="physio-table">
+                        <thead>
+                            <tr>
+                                <th>관상 부위</th>
+                                <th>연관 영역</th>
+                                <th>관상 소견</th>
+                            </tr>
+                        </thead>
+                        <tbody>${physiognomyRows}</tbody>
+                    </table>
+                </div>
+
+                <div class="footer">※ 본 결과는 전통 관상학을 활용한 AI 예측으로, 실제 성적과 무관합니다.</div>
+            </div>
+        `;
+    }
+}
+
+customElements.define('score-report', ScoreReport);
+
+// ── main.js ──────────────────────────────────────────────────────────────────
+
+function getRegionBrightness(ctx, x, y, w, h) {
+    const data = ctx.getImageData(
+        Math.floor(x), Math.floor(y),
+        Math.max(1, Math.floor(w)), Math.max(1, Math.floor(h))
+    ).data;
+    let total = 0;
+    for (let i = 0; i < data.length; i += 4) {
+        total += (data[i] + data[i + 1] + data[i + 2]) / 3;
+    }
+    return total / (data.length / 4) / 255; // 0~1 정규화
+}
+
+function analyzeImage(file) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 100;
+            canvas.height = 100;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, 100, 100);
+            URL.revokeObjectURL(url);
+            resolve({
+                이마: getRegionBrightness(ctx, 10,  0, 80, 20),
+                눈:   getRegionBrightness(ctx,  5, 20, 90, 20),
+                코:   getRegionBrightness(ctx, 25, 40, 50, 20),
+                입:   getRegionBrightness(ctx, 15, 60, 70, 15),
+                턱:   getRegionBrightness(ctx, 20, 75, 60, 15),
+            });
+        };
+        img.src = url;
+    });
+}
+
+function weighted(brightness, min, max) {
+    const range = max - min;
+    const base = min + range * brightness;
+    const noise = (Math.random() - 0.5) * range * 0.25;
+    return Math.round(Math.min(max, Math.max(min, base + noise)));
+}
+
+function percentileToGrade(p) {
+    if (p >= 96) return 1;
+    if (p >= 89) return 2;
+    if (p >= 77) return 3;
+    if (p >= 60) return 4;
+    if (p >= 40) return 5;
+    if (p >= 23) return 6;
+    if (p >= 11) return 7;
+    if (p >= 4)  return 8;
+    return 9;
+}
+
+function brightnessToAbsGrade(brightness) {
+    return Math.max(1, Math.min(9, Math.round(9 - brightness * 8 + (Math.random() - 0.5) * 1.5)));
+}
+
+const EXPLORE_SOCIAL = ['생활과 윤리', '윤리와 사상', '한국지리', '세계지리', '동아시아사', '세계사', '경제', '정치와 법', '사회·문화'];
+const EXPLORE_SCIENCE = ['물리학Ⅰ', '화학Ⅰ', '생명과학Ⅰ', '지구과학Ⅰ'];
+
+function generateScores(f) {
+    const korPct  = weighted(f.이마, 1, 99);
+    const mathPct = weighted(f.눈,   1, 99);
+    const exp1Pct = weighted(f.입,   1, 99);
+    const exp2Pct = weighted(f.입,   1, 99);
+
+    return [
+        {
+            subject: '국어', elective: '화법과 작문',
+            standardScore: weighted(f.이마, 100, 150), percentile: korPct,
+            grade: percentileToGrade(korPct), feature: '이마', brightness: f.이마,
+        },
+        {
+            subject: '수학', elective: '확률과 통계',
+            standardScore: weighted(f.눈, 100, 149), percentile: mathPct,
+            grade: percentileToGrade(mathPct), feature: '눈매', brightness: f.눈,
+        },
+        {
+            subject: '영어', elective: '-',
+            standardScore: null, percentile: null,
+            grade: brightnessToAbsGrade(f.코), feature: '코', brightness: f.코,
+        },
+        {
+            subject: '한국사', elective: '-',
+            standardScore: null, percentile: null,
+            grade: brightnessToAbsGrade(f.턱), feature: '턱', brightness: f.턱,
+        },
+        {
+            subject: '탐구',
+            elective: EXPLORE_SOCIAL[Math.floor(Math.random() * EXPLORE_SOCIAL.length)],
+            standardScore: weighted(f.입, 50, 75), percentile: exp1Pct,
+            grade: percentileToGrade(exp1Pct), feature: '입술', brightness: f.입,
+        },
+        {
+            subject: '탐구',
+            elective: EXPLORE_SCIENCE[Math.floor(Math.random() * EXPLORE_SCIENCE.length)],
+            standardScore: weighted(f.입, 50, 75), percentile: exp2Pct,
+            grade: percentileToGrade(exp2Pct), feature: '입술', brightness: f.입,
+        },
+    ];
+}
+
+const STEPS = [
+    { icon: '🔮', text: '동양 5천 년 관상학 데이터베이스에 접속 중...' },
+    { icon: '📏', text: '이마 면적을 mm² 단위로 정밀 측정하여 국어 점수로 환산 중...' },
+    { icon: '👁️', text: '눈빛에서 기출문제 풀이 횟수를 역추산 중 (수학)' },
+    { icon: '👃', text: '콧구멍 황금비율을 영어 듣기 능력치로 변환 중...' },
+    { icon: '👄', text: '인중 깊이로 공식 암기량을 추정하는 중 (탐구)' },
+    { icon: '🏛️', text: '턱의 내구성이 한국사 연표를 버틸 수 있는지 검증 중...' },
+    { icon: '📜', text: '수능 출제위원회에 몰래 제출... 아니, 최종 성적을 산출 중' },
+];
+
+async function runAnalysis(file, resultContainer) {
+    for (const step of STEPS) {
+        resultContainer.innerHTML = `<p class="analyzing">${step.icon} ${step.text}</p>`;
+        await new Promise(r => setTimeout(r, 550));
+    }
+
+    const features = await analyzeImage(file);
+    const scores = generateScores(features);
+
+    resultContainer.innerHTML = '';
+    const scoreReport = document.createElement('score-report');
+    scoreReport.setAttribute('student-name', '홍길동');
+    scoreReport.setAttribute('exam-number', '10000101');
+    scoreReport.setAttribute('scores', JSON.stringify(scores));
+    resultContainer.appendChild(scoreReport);
+}
+
+document.getElementById('predict-button').addEventListener('click', () => {
+    const fileInput = document.getElementById('face-image');
+    const resultContainer = document.getElementById('result-container');
+
+    if (fileInput.files.length === 0) {
+        alert('사진을 선택해주세요.');
+        return;
+    }
+
+    runAnalysis(fileInput.files[0], resultContainer);
+});
+    </script>
 </body>
 </html>
