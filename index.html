@@ -10,9 +10,73 @@
     <meta property="og:title" content="관상으로 보는 수능 성적표">
     <meta property="og:description" content="사진 한 장으로 오천 년 동양 관상학이 수능 성적을 예측합니다.">
     <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="관상으로 보는 수능 성적표">
+    <meta name="language" content="ko">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:url" content="https://guess-what2.web.app/">
+    <meta property="og:image" content="https://guess-what2.web.app/og-image.png">
+    <link rel="canonical" href="https://guess-what2.web.app/">
     <meta name="google-adsense-account" content="ca-pub-5433446149148136">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5433446149148136" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "관상으로 보는 수능 성적표",
+      "url": "https://guess-what2.web.app/",
+      "description": "사진 한 장으로 전통 동양 관상학 기반 AI가 수능 성적표를 예측하는 엔터테인먼트 서비스입니다.",
+      "applicationCategory": "EntertainmentApplication",
+      "operatingSystem": "All",
+      "inLanguage": "ko",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Organization",
+        "name": "관상으로 보는 수능 성적표"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "관상으로 보는 수능 성적표 결과가 실제 수능 성적을 예측하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아니요. 본 서비스는 순수한 오락 목적의 엔터테인먼트 콘텐츠입니다. 결과는 전통 관상학 이론을 재미있게 적용한 것으로, 실제 수능 성적·학업 능력·지능과 전혀 무관합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "사진이 서버에 저장되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아니요. 업로드된 사진은 사용자의 브라우저 내에서만 처리되며, 어떠한 서버로도 전송되지 않습니다. 페이지를 새로고침하면 사진은 완전히 삭제됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "서비스 이용에 비용이 드나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "무료입니다. 서비스 운영 비용은 페이지 내 광고 수익으로 충당됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "모바일에서도 사용할 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네. 스마트폰·태블릿 등 모바일 기기에서도 사용 가능합니다. 카메라 앨범에서 사진을 선택하거나 즉석에서 촬영하여 업로드할 수 있습니다."
+          }
+        }
+      ]
+    }
+    </script>
     <style>
 * { box-sizing: border-box; }
 
@@ -428,6 +492,7 @@ header p {
     min-height: 60px;
     text-align: center;
 }
+.ad-slot.hidden { display: none; }
 
 /* ── 콘텐츠 섹션 ── */
 .content-section {
@@ -489,6 +554,35 @@ header p {
     margin-top: 0.8rem !important;
 }
 
+/* ── FAQ ── */
+.faq-list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.faq-list dt {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #e8a040;
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(180, 80, 0, 0.2);
+    letter-spacing: 0.3px;
+}
+.faq-list dt:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+.faq-list dd {
+    margin: 0.4rem 0 0 0;
+    font-size: 0.84rem;
+    color: rgba(200, 160, 80, 0.85);
+    line-height: 1.8;
+}
+
 /* ── 푸터 ── */
 .site-footer {
     position: relative;
@@ -498,6 +592,97 @@ header p {
     font-size: 0.72rem;
     color: rgba(180, 100, 0, 0.4);
     letter-spacing: 1px;
+}
+.site-footer .footer-links {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.site-footer .footer-links button {
+    background: none;
+    border: none;
+    color: rgba(180, 100, 0, 0.6);
+    font-size: 0.72rem;
+    font-family: inherit;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+}
+.site-footer .footer-links button:hover {
+    color: rgba(220, 140, 0, 0.9);
+}
+
+/* ── 정책 모달 ── */
+.policy-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 2000;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem;
+    overflow-y: auto;
+}
+.policy-modal-overlay.active {
+    display: flex;
+}
+.policy-modal {
+    background: linear-gradient(160deg, #1e0500 0%, #0f0200 100%);
+    border: 1px solid rgba(200, 100, 0, 0.45);
+    border-radius: 6px;
+    max-width: 660px;
+    width: 100%;
+    padding: 2rem;
+    position: relative;
+    color: rgba(210, 170, 90, 0.85);
+    font-size: 0.84rem;
+    line-height: 1.85;
+    margin: auto;
+}
+.policy-modal h2 {
+    color: #e8a040;
+    font-size: 1.1rem;
+    margin: 0 0 1.2rem;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgba(200,100,0,0.3);
+    padding-bottom: 0.7rem;
+}
+.policy-modal h3 {
+    color: rgba(220, 150, 60, 0.95);
+    font-size: 0.9rem;
+    margin: 1.4rem 0 0.4rem;
+    letter-spacing: 1px;
+}
+.policy-modal p, .policy-modal li {
+    margin: 0.35rem 0;
+    color: rgba(200, 160, 80, 0.8);
+}
+.policy-modal ul {
+    padding-left: 1.2rem;
+}
+.policy-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: 1px solid rgba(200, 100, 0, 0.4);
+    color: rgba(200, 100, 0, 0.8);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.policy-modal-close:hover {
+    background: rgba(200, 100, 0, 0.2);
 }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
@@ -621,7 +806,7 @@ header p {
             <div id="result-container" class="result-container"></div>
 
             <!-- 결과 하단 광고 -->
-            <div class="ad-slot" id="ad-after-result">
+            <div class="ad-slot hidden" id="ad-after-result">
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-5433446149148136"
@@ -675,6 +860,99 @@ header p {
                 <p class="disclaimer">※ 본 서비스는 전통 관상학을 재미로 적용한 엔터테인먼트 콘텐츠이며, 실제 수능 성적과는 무관합니다.</p>
             </article>
 
+            <article class="content-card">
+                <h2>관상학의 역사와 기원</h2>
+                <p>관상학(觀相學, Physiognomy)은 기원전 수천 년 전부터 동양과 서양 모두에서 독립적으로 발전해 온 학문입니다. 중국에서는 주나라(周, 기원전 1046~256년) 시대부터 관리 선발에 관상을 참고했다는 기록이 남아 있으며, 공자(孔子) 또한 인물을 평가할 때 외모와 행동거지를 함께 살폈다고 전해집니다.</p>
+                <p>한국에는 삼국시대를 거쳐 고려·조선 시대에 관상학이 본격적으로 도입됐습니다. 조선왕조실록에는 관상 전문가인 <strong>관상감(觀象監)</strong>이 인물의 길흉화복을 판단했다는 기록이 여러 차례 등장합니다. 특히 조선의 관상 이론은 음양오행(陰陽五行) 사상과 결합되어 이마·눈·코·입·귀의 다섯 부위를 오행(五行)에 대응시키는 독창적인 체계를 발전시켰습니다.</p>
+                <p>서양에서는 고대 그리스의 아리스토텔레스가 관상학에 관한 논문을 저술했으며, 18세기 스위스의 신학자 요한 카스파르 라바터(Johann Kaspar Lavater)가 <em>관상학 단편(Physiognomische Fragmente)</em>을 발표하면서 유럽 전역에 관상 연구 붐이 일었습니다. 현대에는 심리학, 신경과학, 컴퓨터비전 기술과 접목되어 표정 인식(Facial Expression Recognition)과 성격 예측 AI 연구가 활발히 이루어지고 있습니다.</p>
+                <p>본 서비스는 이러한 동서양의 관상 전통을 재해석하여, 유서 깊은 오악(五嶽) 이론을 현대적 AI 기술로 구현한 엔터테인먼트 콘텐츠입니다.</p>
+            </article>
+
+            <!-- 중간 광고 -->
+            <div class="ad-slot">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-5433446149148136"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+            <article class="content-card">
+                <h2>관상으로 본 수능 고득점 유형 10가지</h2>
+                <p>동양 관상학 고전(古典)인 <em>마의상법(麻衣相法)</em>과 <em>달마상법(達摩相法)</em>에는 학문을 잘하는 얼굴의 특징이 구체적으로 기술되어 있습니다. 물론 이는 오락적 해석이며 실제 능력과 무관하지만, 전통 이론에 따른 분류를 소개합니다.</p>
+                <ul class="feature-list">
+                    <li><strong>천정(天庭)이 넓고 편평한 상</strong> — 이마가 넓고 반듯한 형태. 기억력과 사고력이 뛰어나 <em>국어·역사</em> 과목에 강하다고 알려짐.</li>
+                    <li><strong>안신(眼神)이 또렷한 상</strong> — 눈빛이 맑고 집중력이 강한 형태. 수리적 사고와 논리 분석에 뛰어나 <em>수학</em>에 유리.</li>
+                    <li><strong>준두(準頭)가 풍만한 상</strong> — 코끝이 둥글고 풍성한 형태. 꾸준한 반복 학습 능력을 상징, <em>영어 어휘 암기</em>에 강함.</li>
+                    <li><strong>인중(人中)이 깊고 긴 상</strong> — 코와 입술 사이가 뚜렷한 형태. 언어 표현력과 언어 감각을 상징, <em>영어 독해</em>에 유리.</li>
+                    <li><strong>구각(口角)이 올라간 상</strong> — 입꼬리가 위로 향한 형태. 발표력과 암기력을 상징, <em>한국사·탐구</em> 과목에 강함.</li>
+                    <li><strong>지각(地閣)이 두터운 상</strong> — 턱이 단단하고 넓은 형태. 지구력과 꾸준함을 상징, <em>장기 수험 준비</em>에 적합.</li>
+                    <li><strong>양이(兩耳)가 높은 상</strong> — 귀 윗부분이 눈썹 선보다 높은 형태. 정보 흡수력을 상징, <em>탐구 과목</em>에 강하다고 전해짐.</li>
+                    <li><strong>미간(眉間)이 넓은 상</strong> — 두 눈썹 사이 거리가 넓은 형태. 대범하고 창의적인 사고를 상징, <em>논술·사회탐구</em>에 유리.</li>
+                    <li><strong>법령(法令)이 깊은 상</strong> — 팔자주름이 뚜렷한 형태. 판단력과 결단력을 상징, <em>수학 문제풀이</em>에 강함.</li>
+                    <li><strong>오악(五嶽)이 균형 잡힌 상</strong> — 이마·코·턱·좌우 광대뼈 다섯 부위가 조화로운 형태. 전 과목 균형 잡힌 성적의 상징.</li>
+                </ul>
+                <p class="disclaimer">※ 이는 전통 관상학의 해석을 오락 목적으로 소개한 것으로, 실제 학업 성취와 얼굴 생김새는 아무런 인과관계가 없습니다.</p>
+            </article>
+
+            <article class="content-card">
+                <h2>AI 관상 분석의 원리</h2>
+                <p>본 서비스는 <strong>face-api.js</strong> 라이브러리를 활용합니다. face-api.js는 딥러닝 기반의 얼굴 인식 라이브러리로, Mozilla의 TensorFlow.js 위에서 동작합니다. 사진에서 얼굴을 감지하고 68개의 얼굴 랜드마크(facial landmark) 좌표를 추출하여 이마·눈·코·입·턱의 비율과 형태를 수치화합니다.</p>
+                <p>추출된 랜드마크 데이터는 전통 관상학의 오악(五嶽)·오관(五官) 이론에 기반한 알고리즘을 통해 처리됩니다. 이마 너비 대비 얼굴 전체 비율, 눈의 크기와 간격, 코의 길이와 폭, 입술의 형태, 턱의 각도 등 약 20여 가지 수치가 계산됩니다.</p>
+                <p>계산된 수치는 미리 정의된 관상학적 기준표와 대조되어 각 과목별 등급으로 변환됩니다. 전체 분석은 <strong>사용자의 브라우저 내에서만 실행</strong>되며, 사진 데이터는 어떠한 외부 서버로도 전송되지 않습니다. 분석이 완료되거나 페이지를 새로고침하면 모든 이미지 데이터는 자동으로 삭제됩니다.</p>
+                <p>결과의 재미를 높이기 위해 동일한 사진이라도 이름·수험번호·선택과목에 따라 미묘하게 다른 결과가 나올 수 있습니다. 이는 서비스의 엔터테인먼트 목적을 위한 설계입니다.</p>
+            </article>
+
+            <!-- 중간 광고 2 -->
+            <div class="ad-slot">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-5433446149148136"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+            <article class="content-card">
+                <h2>수능 D-100, 관상학이 전하는 마음가짐</h2>
+                <p>수능을 앞둔 수험생에게 전통 관상학은 흥미로운 위로의 말을 건넵니다. 관상의 대가들은 "상(相)은 고정된 것이 아니라 마음과 노력에 따라 변한다"고 가르쳤습니다. 마의상법(麻衣相法)의 핵심 가르침 중 하나는 <strong>"심상(心相)이 골상(骨相)보다 낫다"</strong>는 것입니다. 즉, 타고난 얼굴보다 마음의 자세가 더 중요하다는 뜻입니다.</p>
+                <p>수험생에게 실질적으로 도움이 되는 학습 원칙을 관상학적 관점으로 풀어봅니다:</p>
+                <ul class="feature-list">
+                    <li><strong>눈빛을 밝게 (안신 관리)</strong> — 충분한 수면과 규칙적인 운동으로 눈의 생기를 유지하세요. 전통적으로 눈빛이 맑은 사람이 집중력이 높다고 여겼습니다.</li>
+                    <li><strong>입을 바르게 (구형 관리)</strong> — 긍정적인 언어 습관을 가지세요. 스스로에게 "할 수 있다"고 말하는 것이 자신감 형성에 도움이 됩니다.</li>
+                    <li><strong>이마를 펴라 (천정 관리)</strong> — 스트레스로 미간을 찌푸리지 마세요. 평온한 표정이 뇌의 이완을 돕고 기억력 향상에 유리합니다.</li>
+                    <li><strong>턱을 당겨라 (지각 관리)</strong> — 바른 자세로 공부하세요. 올바른 척추 정렬은 집중력과 지구력을 높입니다.</li>
+                </ul>
+                <p>물론 이는 관상학적 비유이며, 가장 중요한 것은 <strong>꾸준한 학습과 건강한 생활 습관</strong>임을 잊지 마세요.</p>
+            </article>
+
+            <article class="content-card" id="faq">
+                <h2>자주 묻는 질문 (FAQ)</h2>
+                <dl class="faq-list">
+                    <dt>Q. 결과가 실제 수능 성적을 예측하나요?</dt>
+                    <dd>A. 아니요. 본 서비스는 순수한 오락 목적의 엔터테인먼트 콘텐츠입니다. 결과는 전통 관상학 이론을 재미있게 적용한 것으로, 실제 수능 성적·학업 능력·지능과 전혀 무관합니다.</dd>
+
+                    <dt>Q. 사진이 서버에 저장되나요?</dt>
+                    <dd>A. 아니요. 업로드된 사진은 사용자의 브라우저 내에서만 처리되며, 어떠한 서버로도 전송되지 않습니다. 페이지를 새로고침하면 사진은 완전히 삭제됩니다.</dd>
+
+                    <dt>Q. 여러 번 시도하면 결과가 달라지나요?</dt>
+                    <dd>A. 같은 사진으로 재시도하면 동일한 결과가 나오지만, 이름·수험번호·선택과목을 바꾸면 다른 결과가 나올 수 있습니다. 재미를 위한 설계입니다.</dd>
+
+                    <dt>Q. 어떤 사진이 잘 인식되나요?</dt>
+                    <dd>A. 정면을 바라보는 사진, 밝은 조명, 얼굴 전체가 잘 보이는 사진에서 인식률이 높습니다. 측면이나 어두운 사진은 인식이 어려울 수 있습니다.</dd>
+
+                    <dt>Q. 모바일에서도 사용할 수 있나요?</dt>
+                    <dd>A. 네. 스마트폰·태블릿 등 모바일 기기에서도 사용 가능합니다. 카메라 앨범에서 사진을 선택하거나 즉석에서 촬영하여 업로드할 수 있습니다.</dd>
+
+                    <dt>Q. 서비스 이용에 비용이 드나요?</dt>
+                    <dd>A. 무료입니다. 서비스 운영 비용은 페이지 내 광고 수익으로 충당됩니다.</dd>
+
+                    <dt>Q. 관상 결과를 공유할 수 있나요?</dt>
+                    <dd>A. 결과 화면을 스크린샷으로 캡처하여 SNS에 공유하실 수 있습니다. 친구들과 함께 즐겨보세요!</dd>
+                </dl>
+            </article>
+
             <!-- 하단 광고 -->
             <div class="ad-slot">
                 <ins class="adsbygoogle"
@@ -688,8 +966,101 @@ header p {
         </div>
     </section>
 
+    <!-- 개인정보처리방침 모달 -->
+    <div class="policy-modal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+        <div class="policy-modal">
+            <button class="policy-modal-close" onclick="closeModal('modal-privacy')" aria-label="닫기">×</button>
+            <h2 id="privacy-title">개인정보처리방침</h2>
+            <p>본 방침은 <strong>관상으로 보는 수능 성적표</strong> 서비스(이하 "서비스")가 이용자의 개인정보를 어떻게 처리하는지 안내합니다.</p>
+
+            <h3>1. 수집하는 개인정보 항목</h3>
+            <p>본 서비스는 사진 파일을 브라우저 내에서만 처리하며, 서버로 전송하거나 저장하지 않습니다. 별도의 회원가입이나 계정 생성 기능이 없습니다.</p>
+
+            <h3>2. 쿠키(Cookie) 및 광고</h3>
+            <p>본 서비스는 구글 애드센스(Google AdSense)를 통해 광고를 게재합니다. 구글을 포함한 제3자 광고 사업자는 쿠키를 이용하여 이용자의 관심 분야에 맞는 광고를 게재할 수 있습니다.</p>
+            <ul>
+                <li>구글의 쿠키 사용으로 인해 이용자는 맞춤형 광고를 볼 수 있습니다.</li>
+                <li>이용자는 <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer" style="color:rgba(220,160,80,0.9);">Google 광고 설정</a>에서 맞춤 광고를 해제할 수 있습니다.</li>
+                <li>또는 <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" style="color:rgba(220,160,80,0.9);">aboutads.info</a>에서 제3자 쿠키를 거부할 수 있습니다.</li>
+            </ul>
+
+            <h3>3. 사진 데이터 처리</h3>
+            <p>업로드된 사진은 이용자의 브라우저 내에서 face-api.js 라이브러리를 통해 로컬 처리되며, 외부 서버로 전송되지 않습니다. 페이지를 새로고침하면 사진 데이터는 소멸됩니다.</p>
+
+            <h3>4. Google Analytics</h3>
+            <p>본 서비스는 서비스 개선을 위해 Google Analytics를 사용할 수 있으며, 이를 통해 방문자 수, 체류 시간 등 익명화된 통계 정보가 수집될 수 있습니다.</p>
+
+            <h3>5. 이용자의 권리</h3>
+            <p>이용자는 언제든지 브라우저 쿠키를 삭제하거나 설정을 변경하여 정보 수집을 거부할 수 있습니다. 단, 이 경우 일부 서비스 이용이 제한될 수 있습니다.</p>
+
+            <h3>6. 방침 변경</h3>
+            <p>본 방침은 법령 변경이나 서비스 정책 변경에 따라 수정될 수 있으며, 변경 시 본 페이지에 고지합니다.</p>
+            <p style="margin-top:1rem; font-size:0.78rem; color:rgba(160,120,60,0.6);">최종 수정일: 2025년 1월 1일</p>
+        </div>
+    </div>
+
+    <!-- 이용약관 모달 -->
+    <div class="policy-modal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+        <div class="policy-modal">
+            <button class="policy-modal-close" onclick="closeModal('modal-terms')" aria-label="닫기">×</button>
+            <h2 id="terms-title">이용약관</h2>
+            <p>본 약관은 <strong>관상으로 보는 수능 성적표</strong> 서비스 이용에 관한 조건을 정합니다.</p>
+
+            <h3>1. 서비스 목적</h3>
+            <p>본 서비스는 전통 동양 관상학을 재미와 오락 목적으로 적용한 엔터테인먼트 콘텐츠입니다. 본 서비스에서 제공하는 결과는 실제 수능 성적, 학습 능력, 대학 입학 가능성 등과 전혀 무관합니다.</p>
+
+            <h3>2. 이용 제한</h3>
+            <ul>
+                <li>만 14세 미만 이용자는 법정대리인의 동의 없이 본 서비스를 이용할 수 없습니다.</li>
+                <li>타인의 사진을 동의 없이 업로드하는 행위를 금지합니다.</li>
+                <li>서비스 결과를 실제 학업 지표로 활용하는 행위를 금지합니다.</li>
+            </ul>
+
+            <h3>3. 면책 조항</h3>
+            <p>본 서비스는 결과의 정확성, 완전성, 적합성을 보증하지 않습니다. 서비스 이용으로 발생하는 어떠한 손해에 대해서도 운영자는 책임을 지지 않습니다.</p>
+
+            <h3>4. 지식재산권</h3>
+            <p>본 서비스의 디자인, 텍스트, 소프트웨어 등 모든 콘텐츠의 저작권은 운영자에게 있습니다. 무단 복제 및 배포를 금지합니다.</p>
+
+            <h3>5. 약관 변경</h3>
+            <p>본 약관은 서비스 정책에 따라 변경될 수 있으며, 변경 시 본 페이지에 공지합니다. 변경 후에도 서비스를 계속 이용하면 변경된 약관에 동의한 것으로 간주합니다.</p>
+            <p style="margin-top:1rem; font-size:0.78rem; color:rgba(160,120,60,0.6);">최종 수정일: 2025년 1월 1일</p>
+        </div>
+    </div>
+
+    <!-- 문의/소개 모달 -->
+    <div class="policy-modal-overlay" id="modal-about" role="dialog" aria-modal="true" aria-labelledby="about-title">
+        <div class="policy-modal">
+            <button class="policy-modal-close" onclick="closeModal('modal-about')" aria-label="닫기">×</button>
+            <h2 id="about-title">서비스 소개 및 문의</h2>
+
+            <h3>서비스 소개</h3>
+            <p>관상으로 보는 수능 성적표는 오천 년 역사의 동양 관상학(觀相學)을 현대적으로 재해석한 AI 기반 엔터테인먼트 서비스입니다. 사진 한 장으로 이마·눈·코·입·턱의 관상을 분석하여 재미있는 가상 수능 성적표를 생성합니다.</p>
+            <p>본 서비스는 face-api.js 기술을 활용하여 모든 분석이 사용자 브라우저에서 이루어지며, 개인정보 보호를 최우선으로 합니다.</p>
+
+            <h3>운영 목적</h3>
+            <p>수험생과 그 가족들에게 입시 스트레스 속 잠깐의 즐거움과 웃음을 제공하는 것이 본 서비스의 목적입니다. 결과는 오락용이며 실제 성적과 무관합니다.</p>
+
+            <h3>문의</h3>
+            <p>서비스 관련 문의나 불편 사항은 아래를 통해 연락 주시기 바랍니다.</p>
+            <p>이 서비스는 개인 운영 프로젝트입니다.</p>
+
+            <h3>기술 스택</h3>
+            <ul>
+                <li>face-api.js — 브라우저 기반 얼굴 인식</li>
+                <li>Google AdSense — 광고 서비스</li>
+                <li>Noto Serif KR — 한국어 폰트</li>
+            </ul>
+        </div>
+    </div>
+
     <footer class="site-footer">
         <p>© 2025 관상으로 보는 수능 성적표 · 본 결과는 오락 목적이며 실제 성적과 무관합니다.</p>
+        <nav class="footer-links" aria-label="정책 링크">
+            <button onclick="openModal('modal-privacy')">개인정보처리방침</button>
+            <button onclick="openModal('modal-terms')">이용약관</button>
+            <button onclick="openModal('modal-about')">서비스 소개</button>
+        </nav>
     </footer>
     <script>
 // 불꽃 파티클
@@ -1989,18 +2360,16 @@ function getVariant(feature, grade, elective = '') {
 // ── 대학/학과 추천 데이터 ──────────────────────────────────────────────────────
 
 // 실제 수능 정시 입결 기준 tier (국수영탐 평균 등급 기준)
-// 참고: nesin.com 정시 대학 등급 / 진학사 입시전략 자료
+// 참고: 대치720 정시 백분위 기준표
 //
-// 1등급(상위 4%): 서울대 전학과, KAIST·POSTECH, 연세대·고려대 최상위,
-//                 전국 의대(어느 대학이든 의대=1등급), 경희대 한의예·치의예
-// 2등급(~11%): 연세대/고려대 상위학과, 서강대 경영/경제, 성균관대 반도체,
-//              건국대 수의대, 연세대 치대, 중앙대 경영(2등급 후반)
-// 3등급(~23%): 이화여대·경희대·한국외대·서울시립대 일반,
-//              건국대·동국대·홍익대 인기학과
-// 4등급(~40%): 인하대·아주대·숭실대·국민대·숙명여대 일반,
-//              지방 거점 국립대 인기학과
-// 5등급(~60%): 세종·단국·명지 일반, 지방 거점 국립대 일반
-// 6등급(~77%): 인천대·가천대·경기대 등, 지방 사립대 상위
+// 1등급(백분위 96~): 서울대·카이스트·포스텍, 의예(98+), 치의예·한의예·약학(96~97)
+// 2등급(백분위 89~96): 연·고대 상위학과, 서강 경영(93), 성균관 반도체(94),
+//                      건국대 수의대(95), 고려대 법학(94)
+// 3등급(백분위 77~89): 한국외대·서울시립대(87~89), 건국·동국·홍익 인기학과(85~89),
+//                      경희대·이화여대 일반(90~91)
+// 4등급(백분위 60~77): 인하·아주·숭실·국민·숙명여대 일반(81~84), 가천대 간호(79)
+// 5등급(백분위 40~60): 세종·단국·명지 일반, 지방 거점 국립대 일반
+// 6등급(~77%): 경기대·수원대 등, 지방 사립대 상위
 // 7등급(~89%): 지방 사립대 중위
 // 8등급(~96%): 지방 사립대 하위
 // 9등급: 방통대·학점은행제 등
@@ -2012,25 +2381,26 @@ const UNI_TIERS = {
         { uni: '서울대학교', dept: '전기정보공학부', comment: '눈빛에서 이미 공학자의 기운' },
         { uni: 'POSTECH', dept: '컴퓨터공학과', comment: '우주의 이치를 탐구할 관상' },
         { uni: '경희대학교', dept: '한의과대학 한의예과', comment: '한의대도 1등급 관상이 필요' },
-        { uni: '고려대학교', dept: '법과대학 법학과', comment: '법조인의 위엄 관상' },
+        { uni: '연세대학교', dept: '치과대학 치의학과', comment: '치의예 97백분위, 1등급 관상' },
+        { uni: '이화여자대학교', dept: '약학대학 약학부', comment: '약학 97백분위, 의치한의급 관상' },
     ],
     2: [
         { uni: '연세대학교', dept: '경영학부', comment: '연세 경영 기운 강하게 흐름' },
         { uni: '고려대학교', dept: '경영대학 경영학과', comment: '고려 경영 관상 발현' },
         { uni: '서강대학교', dept: '경영학부', comment: '서강 경영은 2등급 관상' },
         { uni: '건국대학교', dept: '수의과대학 수의예과', comment: '수의대는 의대급 관상 필요' },
-        { uni: '중앙대학교', dept: '경영경제대학 경영학부', comment: '중앙대 경영은 2등급 후반' },
+        { uni: '고려대학교', dept: '법과대학 법학과', comment: '94백분위, 법조인의 위엄 관상' },
         { uni: '성균관대학교', dept: '반도체공학과', comment: '삼성이 이 관상 좋아함' },
-        { uni: '연세대학교', dept: '치과대학 치의학과', comment: '치의학 명문 관상 적합' },
+        { uni: '중앙대학교', dept: '경영경제대학 경영학부', comment: '중앙대 경영은 2등급 후반' },
     ],
     3: [
-        { uni: '이화여자대학교', dept: '약학대학 약학부', comment: '약학 기운이 흐름' },
-        { uni: '한국외국어대학교', dept: '영어대학 영어학부', comment: '외국어에 특화된 입술 관상' },
-        { uni: '서울시립대학교', dept: '경영대학 경영학부', comment: '서울시립 경영 기운 흐름' },
+        { uni: '한국외국어대학교', dept: '영어대학 영어학부', comment: '87~89백분위, 외국어에 특화된 관상' },
+        { uni: '서울시립대학교', dept: '경영대학 경영학부', comment: '87~89백분위, 서울시립 경영 기운' },
         { uni: '건국대학교', dept: '경영대학 경영학부', comment: '건대 경영은 3등급 관상' },
         { uni: '동국대학교', dept: '경찰사법대학 경찰행정학부', comment: '정의로운 눈빛 관상' },
         { uni: '홍익대학교', dept: '미술대학 시각디자인과', comment: '예술가 관상 발견' },
-        { uni: '가천대학교', dept: '간호학과', comment: '간호학과는 어디든 3등급은 필요' },
+        { uni: '경희대학교', dept: '관광대학 관광학부', comment: '경희대 3등급, 사람 모이는 관상' },
+        { uni: '이화여자대학교', dept: '사범대학 교육학과', comment: '90~91백분위, 교육자 관상' },
     ],
     4: [
         { uni: '인하대학교', dept: '공과대학 기계공학과', comment: '기계 다루는 손관상' },
@@ -2039,6 +2409,7 @@ const UNI_TIERS = {
         { uni: '국민대학교', dept: '자동차공학과', comment: '자동차와 친숙한 손관상' },
         { uni: '숙명여자대학교', dept: '사회과학대학 행정학부', comment: '공직자 관상 발동' },
         { uni: '경북대학교', dept: '공과대학 컴퓨터학부', comment: '대구 IT 이끌 관상' },
+        { uni: '가천대학교', dept: '간호학과', comment: '79백분위, 간호 기운이 흐르는 관상' },
         { uni: '을지대학교', dept: '간호학과', comment: '간호 기운이 흐르는 관상' },
     ],
     5: [
@@ -2597,6 +2968,7 @@ async function runAnalysis(file, name, examNumber, subjects, resultContainer) {
     scoreReport.setAttribute('exam-number', examNumber);
     scoreReport.setAttribute('scores', JSON.stringify(scores));
     resultContainer.appendChild(scoreReport);
+    document.getElementById('ad-after-result').classList.remove('hidden');
 }
 
 // 수험번호 자동 생성
@@ -2634,6 +3006,26 @@ document.getElementById('face-image').addEventListener('change', (e) => {
     img.src = url;
     img.style.display = 'block';
     document.getElementById('photo-placeholder').style.display = 'none';
+});
+
+// 정책 모달
+function openModal(id) {
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+}
+document.querySelectorAll('.policy-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+        if (e.target === this) closeModal(this.id);
+    });
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.policy-modal-overlay.active').forEach(el => closeModal(el.id));
+    }
 });
 
 document.getElementById('predict-button').addEventListener('click', () => {
