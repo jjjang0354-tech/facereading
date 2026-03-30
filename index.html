@@ -80,6 +80,44 @@
     <style>
 * { box-sizing: border-box; }
 
+/* ── 상단 네비게이션 ── */
+.site-nav {
+    width: 100%;
+    background: rgba(10, 2, 0, 0.95);
+    border-bottom: 1px solid rgba(200, 100, 0, 0.3);
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.site-nav .nav-brand {
+    color: #e8a040;
+    font-weight: 900;
+    font-size: 0.95rem;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+.site-nav .nav-links {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-left: auto;
+}
+.site-nav .nav-links a {
+    color: rgba(210, 160, 80, 0.7);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+}
+.site-nav .nav-links a:hover,
+.site-nav .nav-links a.active {
+    color: #e8a040;
+}
+
 body {
     font-family: 'Noto Serif KR', 'Malgun Gothic', serif;
     margin: 0;
@@ -600,18 +638,13 @@ header p {
     justify-content: center;
     flex-wrap: wrap;
 }
-.site-footer .footer-links button {
-    background: none;
-    border: none;
+.site-footer .footer-links a {
     color: rgba(180, 100, 0, 0.6);
     font-size: 0.72rem;
-    font-family: inherit;
     letter-spacing: 1px;
-    cursor: pointer;
     text-decoration: underline;
-    padding: 0;
 }
-.site-footer .footer-links button:hover {
+.site-footer .footer-links a:hover {
     color: rgba(220, 140, 0, 0.9);
 }
 
@@ -688,6 +721,18 @@ header p {
     <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 </head>
 <body>
+
+    <!-- 상단 네비게이션 -->
+    <nav class="site-nav" aria-label="메인 네비게이션">
+        <a href="/" class="nav-brand">관상으로 보는 수능 성적표</a>
+        <div class="nav-links">
+            <a href="/" class="active">홈</a>
+            <a href="#faq">FAQ</a>
+            <a href="/about.html">서비스 소개</a>
+            <a href="/privacy.html">개인정보처리방침</a>
+            <a href="/terms.html">이용약관</a>
+        </div>
+    </nav>
 
     <!-- 장식 문구 -->
     <div class="deco-top">天 · 地 · 人 · 相 · 法</div>
@@ -1057,9 +1102,9 @@ header p {
     <footer class="site-footer">
         <p>© 2025 관상으로 보는 수능 성적표 · 본 결과는 오락 목적이며 실제 성적과 무관합니다.</p>
         <nav class="footer-links" aria-label="정책 링크">
-            <button onclick="openModal('modal-privacy')">개인정보처리방침</button>
-            <button onclick="openModal('modal-terms')">이용약관</button>
-            <button onclick="openModal('modal-about')">서비스 소개</button>
+            <a href="/privacy.html">개인정보처리방침</a>
+            <a href="/terms.html">이용약관</a>
+            <a href="/about.html">서비스 소개</a>
         </nav>
     </footer>
     <script>
